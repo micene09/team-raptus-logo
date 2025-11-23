@@ -14,10 +14,10 @@
 <style lang="scss">
 	.color-picker {
 		.picker-inputs {
-			margin-top: calc(var(--spacing) * .25);
+			margin-top: calc(var(--pico-spacing) * .25);
 			display: grid;
 			grid-template-columns: 1fr 4fr;
-			gap: var(--spacing);
+			gap: var(--pico-spacing);
 		}
 	}
 </style>

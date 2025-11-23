@@ -25,5 +25,5 @@ const props = defineProps({
 })
 const emit = defineEmits(['update:modelValue'])
 const value = useVModel(props, "modelValue", emit)
-const id = ref(Math.random() * 1000 + "")
+const id = ref<string>(Math.random() * 1000 + "")
 </script>

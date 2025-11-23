@@ -18,9 +18,9 @@
 		width: var(--github-repo-width);
 		height: var(--github-repo-height);
 		text-decoration: none;
-		color: var(--color);
+		color: var(--pico-color);
 		> svg {
-			fill: var(--color);
+			fill: var(--pico-color);
 			width: var(--github-repo-width);
 			height: var(--github-repo-height);
 			vertical-align: top;
