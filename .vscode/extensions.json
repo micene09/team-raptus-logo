@@ -1,0 +1,12 @@
+{
+	"recommendations": [
+		"streetsidesoftware.code-spell-checker",
+		"editorconfig.editorconfig",
+		"mhutchie.git-graph",
+		"eamodio.gitlens",
+    "gruntfuggly.todo-tree",
+		"vue.volar",
+		"yzhang.markdown-all-in-one",
+    "bierner.markdown-preview-github-styles"
+  ]
+}
