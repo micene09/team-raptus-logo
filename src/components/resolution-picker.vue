@@ -1,7 +1,6 @@
 <template>
 	<label class="resolution-picker" :for="id">
-		<template v-if="label">{{label}}</template>
-		<slot name="label"></slot>
+		{{ label }}
 		<div class="picker-inputs">
 			<input type="number" class="w" :id="id"
 				:disabled="disabled" v-model="w" @change="updateHeight">
@@ -12,16 +11,16 @@
 	</label>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.resolution-picker {
 		.picker-inputs {
-			margin-top: calc(var(--spacing) * .25);
+			margin-top: calc(var(--pico-spacing) * .25);
 			display: grid;
 			grid-template-columns: 1fr 1rem 1fr;
 			gap: .5rem;
 			> .divider {
 				text-align: center;
-				padding: var(--form-element-spacing-vertical) 0;
+				padding: var(--pico-form-element-spacing-vertical) 0;
 			}
 			> input {
 				text-align: center;

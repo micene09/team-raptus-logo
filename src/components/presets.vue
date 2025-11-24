@@ -1,8 +1,7 @@
 <template>
-	<label class="presets-picker" :for="id">
-		<template v-if="label">{{label}}</template>
-		<slot name="label"></slot>
-		<select id="fruit" :id="id" @change="onChange">
+	<label>
+		{{ label }}
+		<select :id="id" @change="onChange">
 			<option :value="-1"></option>
 			<option v-for="(opt, index) in options" :value="index">{{ opt.name }}</option>
 		</select>
@@ -10,8 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue"
-import { useVModel } from "@vueuse/core";
+import { onMounted, ref, defineModel } from "vue"
 import { Preset } from "../app";
 
 type PresetOptions = {
@@ -22,71 +20,50 @@ const options: PresetOptions[] = [
 	{
 		"name": "Vale",
 		"data": {
-			"bgcolor": "transparent",
-			"body": "#ff7038",
-			"bodyLights": "#7c4028",
-			"primary": "#d3cea1",
-			"secondary": "#aea7af"
+			"bgColor": "transparent",
+			"primary": "#d3cea1"
 		}
 	},
 	{
 		"name": "Enry",
 		"data": {
-			"bgcolor": "transparent",
-			"body": "#805a77",
-			"bodyLights": "#630c53",
-			"primary": "#de6cdc",
-			"secondary": "#e8f39e"
+			"bgColor": "transparent",
+			"primary": "#de6cdc"
 		}
 	},
 	{
 		"name": "Marti",
 		"data": {
-			"bgcolor": "transparent",
-			"body": "#c0b3f4",
-			"bodyLights": "#6a6380",
-			"primary": "#177b91",
-			"secondary": "#a39fac"
+			"bgColor": "transparent",
+			"primary": "#177b91"
 		}
 	},
 	{
 		"name": "Gio",
 		"data": {
-			"bgcolor": "transparent",
-			"body": "#41443e",
-			"bodyLights": "#8c8f89",
-			"primary": "#93ff72",
-			"secondary": "#3543b7"
+			"bgColor": "transparent",
+			"primary": "#93ff72"
 		}
 	},
 	{
 		"name": "Phil",
 		"data": {
-			"bgcolor": "transparent",
-			"body": "#44423e",
-			"bodyLights": "#8f8d88",
-			"primary": "#ffd66b",
-			"secondary": "#386144"
+			"bgColor": "transparent",
+			"primary": "#ffd66b"
 		}
 	},
 	{
 		"name": "Pablo",
 		"data": {
-			"bgcolor": "transparent",
-			"body": "#716280",
-			"bodyLights": "#402163",
-			"primary": "#8f61de",
-			"secondary": "#f3f077"
+			"bgColor": "transparent",
+			"primary": "#8f61de"
 		}
 	},
 	{
 		"name": "Fra",
 		"data": {
-			"bgcolor": "transparent",
-			"body": "#6d8062",
-			"bodyLights": "#647946",
-			"primary": "#a6de61",
-			"secondary": "#f3818f"
+			"bgColor": "transparent",
+			"primary": "#a6de61"
 		}
 	}
 ];
@@ -95,20 +72,18 @@ const props = defineProps({
 		type: String,
 		default: "Presets"
 	},
-	modelValue: {
-		type: Object,
-		default: () => null
-	}
 })
-
 const id = ref(Math.random() * 1000 + "");
-const emit = defineEmits(["update:modelValue", "click-import", "click-export"])
-const data = useVModel(props, "modelValue", emit)
+const emit = defineEmits(["click-import", "click-export"])
+const data = defineModel({
+	type: Object,
+	default: () => null
+})
 
 onMounted(() => {
 	data.value = null
 })
-function onChange(payload) {
+function onChange(payload: any) {
 	const index = +payload.target.value;
 	if (index < 0)
 		return data.value = null

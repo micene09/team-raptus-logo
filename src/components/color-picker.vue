@@ -1,30 +1,15 @@
 <template>
-	<label class="color-picker" :for="id">
-		<div>
-			<template v-if="label">{{label}}</template>
-			<slot name="label"></slot>
-		</div>
-		<div class="picker-inputs">
-			<input type="color" v-model="value" />
-			<input type="text" v-model="value" :id="id" />
-		</div>
+	<label :for="id">
+		{{ label }}
+		<fieldset role="group">
+			<input style="width: 5rem;" type="color" v-model="value" />
+			<input type="text" v-model="value" :placeholder="label" :aria-label="label" :id="id" />
+		</fieldset>
 	</label>
 </template>
 
-<style lang="scss">
-	.color-picker {
-		.picker-inputs {
-			margin-top: calc(var(--pico-spacing) * .25);
-			display: grid;
-			grid-template-columns: 1fr 4fr;
-			gap: var(--pico-spacing);
-		}
-	}
-</style>
-
 <script setup lang="ts">
-import { ref } from "vue"
-import { useVModel } from "@vueuse/core"
+import { ref, defineModel } from "vue"
 
 const props = defineProps({
 	label: {
@@ -37,7 +22,10 @@ const props = defineProps({
 		required: true
 	}
 })
-const emit = defineEmits(['update:modelValue'])
-const value = useVModel(props, "modelValue", emit)
+const value = defineModel({
+	type: String,
+	default: "",
+	required: true
+})
 const id = ref(Math.random() * 1000 + "")
 </script>

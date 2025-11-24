@@ -1,5 +1,5 @@
 <template>
-	<span class="theme-switch" type="button" role="switch" @click="() => toggleDark()" :class="{
+	<span class="theme-switch" @click="() => toggleDark()" :class="{
 			'dark': isDark,
 			'light': !isDark
 		}">
@@ -48,28 +48,31 @@
 	position: relative;
 	display: inline-block;
 	cursor: pointer;
+	margin: 0;
+	padding: 0;
 	border-radius: 1rem;
 	display: block;
 	width: var(--theme-switch-width);
 	height: var(--theme-switch-height);
+	line-height: var(--theme-switch-height);
 	flex-shrink: 0;
-	border: var(--border-width) solid var(--form-element-border-color);
-	background-color: var(--form-element-background-color);
+	border: var(--pico-border-width) solid var(--pico-form-element-border-color);
+	background-color: var(--pico-form-element-background-color);
 	appearance: none;
-	transition: background-color var(--transition), border-color var(--transition), color var(--transition), box-shadow var(--transition);
+	transition: background-color var(--pico-transition), border-color var(--pico-transition), color var(--pico-transition), box-shadow var(--pico-transition);
 
 	&:hover {
-		border-color: var(--form-element-active-border-color);
+		border-color: var(--pico-form-element-active-border-color);
 		&:focus {
-			box-shadow: 0 0 0 var(--outline-width) var(--form-element-focus-color);
+			box-shadow: 0 0 0 var(--pico-outline-width) var(--pico-form-element-focus-color);
 		}
 	}
 	> .check {
 		position: absolute;
 		top: 0;
 		left: 0;
-		width: calc(var(--theme-switch-width) - (var(--border-width) * 2));
-		height: calc(var(--theme-switch-height) - (var(--border-width) * 2));
+		width: calc(var(--theme-switch-width) - (var(--pico-border-width) * 2));
+		height: calc(var(--theme-switch-height) - (var(--pico-border-width) * 2));
 		border-radius: 50%;
 		background: transparent;
 		transition: background-color .25s, transform .25s;
@@ -77,8 +80,8 @@
 		> .icon {
 			position: relative;
 			display: block;
-			width: calc(var(--theme-switch-width) - (var(--border-width) * 2));
-			height: calc(var(--theme-switch-height) - (var(--border-width) * 2));
+			width: calc(var(--theme-switch-width) - (var(--pico-border-width) * 2));
+			height: calc(var(--theme-switch-height) - (var(--pico-border-width) * 2));
 			border-radius: 50%;
 			overflow: hidden;
 
@@ -86,13 +89,13 @@
 				position: absolute;
 				top: 0;
 				left: 0;
-				width: calc((var(--theme-switch-width) - (var(--border-width) * 2)) / 2);
-				height: calc(var(--theme-switch-height) - (var(--border-width) * 2));
-				fill: var(--color);
+				width: calc((var(--theme-switch-width) - (var(--pico-border-width) * 2)) / 2);
+				height: calc(var(--theme-switch-height) - (var(--pico-border-width) * 2));
+				fill: var(--pico-color);
 				&:hover {
-					fill: var(--form-element-active-border-color);
+					fill: var(--pico-form-element-active-border-color);
 					&:focus {
-						box-shadow: 0 0 0 var(--outline-width) var(--form-element-focus-color);
+						box-shadow: 0 0 0 var(--pico-outline-width) var(--pico-form-element-focus-color);
 					}
 				}
 			}
