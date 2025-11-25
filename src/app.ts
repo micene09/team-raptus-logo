@@ -5,17 +5,13 @@ import Logo from "./components/logo.vue"
 import ColorPicker from "./components/color-picker.vue";
 import FormatPicker from "./components/format-picker.vue";
 import ResolutionPicker from "./components/resolution-picker.vue";
-import Presets from "./components/presets.vue";
 import ThemeSwitch from "./components/theme-switch.vue";
 import GitHubRepo from "./components/github-repo.vue";
 import { refAutoReset, refDebounced, useClipboard } from "@vueuse/core";
 
 export type Preset = {
-	bgcolor: string
-	body: string
-	bodyLights: string
+	bgColor: string
 	primary: string
-	secondary: string
 }
 export default defineComponent({
 	components: {
@@ -23,7 +19,6 @@ export default defineComponent({
 		ColorPicker,
 		FormatPicker,
 		ResolutionPicker,
-		Presets,
 		ThemeSwitch,
 		GitHubRepo
 	},
@@ -33,11 +28,8 @@ export default defineComponent({
 		const loadingDebounced = refDebounced(loading, 300)
 		const copiedTooltip = refAutoReset<string | undefined>(undefined, 2500)
 		const printArea = ref(null)
-		const bgcolor = ref("transparent")
-		const body = ref("#3e4442")
-		const bodyLights = ref("#6b7375")
 		const primary = ref("")
-		const secondary = ref("")
+		const bgColor = ref("transparent")
 		const format = ref<"PNG" | "SVG">("PNG")
 		const width = ref(760);
 		const height = ref(1000);
@@ -49,11 +41,8 @@ export default defineComponent({
 			const params = url.searchParams
 			const defaultPreset = getPresetObject()
 			const queryStringPreset: Partial<Preset> = {
-				bgcolor: params.get("bgcolor") ?? "",
-				body: params.get("body") ?? "",
-				bodyLights: params.get("bodyLights") ?? "",
-				primary: params.get("primary") ?? "",
-				secondary: params.get("secondary") ?? ""
+				bgColor: params.get("bgColor") ?? "",
+				primary: params.get("primary") ?? ""
 			}
 			const loadedPreset = {
 				...defaultPreset,
@@ -64,11 +53,8 @@ export default defineComponent({
 		})
 		function getPresetObject(): Preset {
 			return {
-				bgcolor: bgcolor.value,
-				body: body.value,
-				bodyLights: bodyLights.value,
 				primary: primary.value,
-				secondary: secondary.value
+				bgColor: bgColor.value
 			}
 		}
 		async function download() {
@@ -90,11 +76,8 @@ export default defineComponent({
 		}
 		function onPresetChanged(preset: Preset | null) {
 			if (!preset) return;
-			bgcolor.value = preset.bgcolor
-			body.value = preset.body
-			bodyLights.value = preset.bodyLights
+			bgColor.value = preset.bgColor
 			primary.value = preset.primary
-			secondary.value = preset.secondary
 		}
 		async function onClickImport() {
 			const [handle] = await window.showOpenFilePicker({
@@ -112,11 +95,8 @@ export default defineComponent({
 				const content = reader.result as string
 				try {
 					const preset: Preset = JSON.parse(content)
-					bgcolor.value = preset.bgcolor
-					body.value = preset.body
-					bodyLights.value = preset.bodyLights
 					primary.value = preset.primary
-					secondary.value = preset.secondary
+					bgColor.value = preset.bgColor
 				} catch {}
 			}
 		}
@@ -137,7 +117,7 @@ export default defineComponent({
 				.variation('light')
 				.colors()
 			primary.value = "#" + colors.at(0)
-			secondary.value = "#" + colors.at(-1)
+			bgColor.value = "#" + colors.at(-1)
 		}
 		onClickRandomColors()
 		return {
@@ -146,11 +126,8 @@ export default defineComponent({
 			onClickRandomColors,
 			repoUrl,
 			printArea,
-			bgcolor,
-			body,
-			bodyLights,
+			bgColor,
 			primary,
-			secondary,
 			format,
 			width,
 			height,

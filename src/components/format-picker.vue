@@ -1,11 +1,8 @@
 <template>
-	<label>
-		{{label}}
-		<select :id="id" v-model="value">
-			<option>PNG</option>
-			<option>SVG</option>
-		</select>
-	</label>
+	<select :id="id" v-model="value">
+		<option>PNG</option>
+		<option>SVG</option>
+	</select>
 </template>
 
 <script setup lang="ts">

@@ -1,87 +1,57 @@
 <template>
-<div class="container">
-	<div class="page">
-		<div id="title" class="title-bar">
-			<h3 class="title">Team Raptus Logo Lab</h3>
-			<span class="tools">
-				<ThemeSwitch />
-				<GitHubRepo :href="repoUrl" class="contrast" />
-			</span>
+<div class="page">
+	<div id="title" class="title-bar">
+		<h3 class="title">Team Raptus Logo Lab</h3>
+		<span class="tools">
+			<ThemeSwitch />
+			<GitHubRepo :href="repoUrl" class="contrast" />
+		</span>
+	</div>
+	<div class="form" id="form">
+		<ColorPicker label="Background" v-model="bgColor" />
+		<ColorPicker label="Primary" v-model="primary" />
+		<fieldset role="group">
+			<button class="outline" @click="onClickImport">Import</button>
+			<button class="outline" @click="onClickExport">Export</button>
+			<button class="outline" @click="onClickRandomColors">Random</button>
+			<button :data-tooltip="copiedTooltip" @click="share">Share</button>
+		</fieldset>
+		<fieldset role="group">
+			<FormatPicker label="&nbsp;" v-model="format" />
+			<button @click="download">Save</button>
+		</fieldset>
+		<ResolutionPicker v-model:w="width" v-model:h="height" :disabled="format === 'SVG'" />
+		<div class="grid">
+			<label class="just-button">
+				&nbsp;
+			</label>
 		</div>
-		<div class="form" id="form">
-			<ColorPicker label="Background" v-model="bgcolor" />
-			<ColorPicker label="Body" v-model="body" />
-			<ColorPicker label="Body lights" v-model="bodyLights" />
-			<ColorPicker label="Primary" v-model="primary" />
-			<ColorPicker label="Secondary" v-model="secondary" />
-			<div class="grid">
-				<Presets @update:modelValue="onPresetChanged" />
-				<div class="grid">
-					<label>
-						&nbsp;
-						<button class="outline" @click="onClickImport"><small>Import</small></button>
-					</label>
-					<label>
-						&nbsp;
-						<button class="outline" @click="onClickExport"><small>Export</small></button>
-					</label>
-				</div>
-			</div>
-			<div class="grid">
-				<ResolutionPicker v-model:w="width" v-model:h="height" :disabled="format === 'SVG'" />
-				<label class="just-button">
-					&nbsp;
-					<button class="outline" @click="onClickRandomColors">Random Colors</button>
-				</label>
-			</div>
-			<div class="save-area">
-				<label>
-					&nbsp;
-					<button :data-tooltip="copiedTooltip" @click="share">Share</button>
-				</label>
-				<label>
-					&nbsp;
-					<button @click="download">Export as</button>
-				</label>
-				<FormatPicker label="&nbsp;" v-model="format" />
-			</div>
+		<div class="save-area">
+			<label>
+				&nbsp;
+			</label>
+			<label>
+				&nbsp;
+			</label>
 		</div>
-		<div class="logo-wrapper" id="preview" :style="{ background: bgcolor }" :aria-busy="loadingDebounced">
-			<template v-if="!loadingDebounced">
-				<Logo class="logo"
-					:body="body"
-					:body-lights="bodyLights"
-					:primary="primary"
-					:secondary="secondary"
-				/>
-				<Logo class="logo chat small"
-					:body="body"
-					:body-lights="bodyLights"
-					:primary="primary"
-					:secondary="secondary"
-					:style="{ background: bgcolor }"
-				/>
-				<Logo class="logo chat extra-small"
-					:body="body"
-					:body-lights="bodyLights"
-					:primary="primary"
-					:secondary="secondary"
-					:style="{ background: bgcolor }"
-				/>
-			</template>
-		</div>
+	</div>
+	<div class="logo-wrapper" id="preview" :style="{ background: bgColor }" :aria-busy="loadingDebounced">
+		<template v-if="!loadingDebounced">
+			<Logo class="logo"
+				:bgColor="bgColor"
+				:primary="primary"
+			/>
+		</template>
 	</div>
 </div>
 <div class="print-area" ref="printArea" :style="{
-		background: bgcolor,
+		background: bgColor,
 		width: width + 'px',
 		height: height + 'px'
 	}">
 	<Logo class="logo"
-		:body="body"
-		:body-lights="bodyLights"
+		:bgColor="bgColor"
 		:primary="primary"
-		:secondary="secondary"
 	/>
 </div>
 </template>
