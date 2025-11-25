@@ -23,7 +23,7 @@ jobs:
         registry-url: 'https://registry.npmjs.org'
         cache: 'yarn'
     - name: setup
-      uses: actions/configure-pages
+      uses: actions/configure-pages@v5
     - run: corepack enable
     - run: yarn install
     - run: yarn build
