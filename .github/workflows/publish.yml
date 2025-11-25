@@ -23,6 +23,7 @@ jobs:
 
       - name: build 🔧
         run: |
+          corepack enable
           yarn install --immutable
           yarn build
 
