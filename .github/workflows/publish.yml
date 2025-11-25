@@ -15,7 +15,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout
+    - uses: actions/checkout@v6
     - name: Use Node.js v22.x
       uses: actions/setup-node@v6
       with:
@@ -28,7 +28,7 @@ jobs:
     - run: yarn install
     - run: yarn build
     - name: upload github pages artifact
-      uses: actions/upload-pages-artifact
+      uses: actions/upload-pages-artifact@v3
       with:
         path: dist
 
@@ -48,4 +48,4 @@ jobs:
     steps:
       - name: deploy
         id: deployment
-        uses: actions/deploy-pages
+        uses: actions/deploy-pages@v4
