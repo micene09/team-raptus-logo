@@ -4,6 +4,12 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'reason'
+        required: false
+        default: 'manual run'
 
 permissions:
   contents: write
