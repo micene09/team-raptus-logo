@@ -18,6 +18,7 @@ body > main {
 		"t t"
 		"p p"
 		"f f";
+	grid-template-rows: max-content 20rem auto;
 	#title {
 		padding-top: var(--pico-spacing);
 		padding-left: var(--pico-spacing);
@@ -42,8 +43,15 @@ body > main {
 	#preview {
 		grid-area: p;
 		padding: var(--pico-spacing);
-		border: var(--pico-border-width) solid var(--pico-form-element-border-color);
-		border-radius: var(--pico-border-radius);
+		text-align: center;
+		> svg {
+			height: 100%;
+			width: 100%;
+		}
+		@media screen and (min-width: 900px) {
+			border: var(--pico-border-width) solid var(--pico-form-element-border-color);
+			border-radius: var(--pico-border-radius);
+		}
 	}
 	#form {
 		grid-area: f;
@@ -65,10 +73,6 @@ body > main {
 			align-items: center;
 		}
 	}
-}
-.print-area {
-	position: absolute;
-	bottom: -3000000rem;
 }
 /* width */
 ::-webkit-scrollbar {

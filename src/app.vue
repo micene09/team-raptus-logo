@@ -14,26 +14,14 @@
 			<button class="outline" @click="onClickImport">Import</button>
 			<button class="outline" @click="onClickExport">Export</button>
 			<button class="outline" @click="onClickRandomColors">Random</button>
-			<button :data-tooltip="copiedTooltip" @click="share">Share</button>
+			<button class="outline" :data-tooltip="copiedTooltip" @click="share">Share</button>
 		</fieldset>
+		<label>Save as</label>
 		<fieldset role="group">
 			<FormatPicker label="&nbsp;" v-model="format" />
 			<button @click="download">Save</button>
 		</fieldset>
-		<ResolutionPicker v-model:w="width" v-model:h="height" :disabled="format === 'SVG'" />
-		<div class="grid">
-			<label class="just-button">
-				&nbsp;
-			</label>
-		</div>
-		<div class="save-area">
-			<label>
-				&nbsp;
-			</label>
-			<label>
-				&nbsp;
-			</label>
-		</div>
+		<ResolutionPicker v-if="format === 'PNG'" v-model:w="width" v-model:h="height" />
 	</div>
 	<div class="logo-wrapper" id="preview" :style="{ background: bgColor }" :aria-busy="loadingDebounced">
 		<template v-if="!loadingDebounced">
