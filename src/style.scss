@@ -3,11 +3,15 @@ body,
 body > main {
 	padding: 0;
 	padding-block: 0;
+}
+main, .page {
+	height: 100vh;
+	width: 100vw;
+}
+main {
 	overflow: hidden;
 }
 .page {
-	height: 100vh;
-	width: 100vw;
 	overflow: auto;
 	display: grid;
 	gap: var(--pico-spacing);
