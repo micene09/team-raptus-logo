@@ -7,7 +7,7 @@ import FormatPicker from "./components/format-picker.vue";
 import ResolutionPicker from "./components/resolution-picker.vue";
 import ThemeSwitch from "./components/theme-switch.vue";
 import GitHubRepo from "./components/github-repo.vue";
-import { refAutoReset, refDebounced, useClipboard } from "@vueuse/core";
+import { refAutoReset, refDebounced, useClipboard, useDark } from "@vueuse/core";
 
 export type Preset = {
 	bgColor: string
@@ -28,7 +28,13 @@ export default defineComponent({
 		const loadingDebounced = refDebounced(loading, 300)
 		const copiedTooltip = refAutoReset<string | undefined>(undefined, 2500)
 		const printArea = useTemplateRef<HTMLDivElement>("printArea")
-		const primary = ref("#ffffff")
+		const isDark = useDark({
+			selector: "html",
+			attribute: "data-theme",
+			valueDark: 'dark',
+			valueLight: 'light'
+		})
+		const primary = ref(isDark.value ? "#ffffff" : "#000000")
 		const bgColor = ref("transparent")
 		const format = ref<"PNG" | "SVG">("PNG")
 		const width = ref(760);
@@ -97,6 +103,12 @@ export default defineComponent({
 			primary.value = "#" + colors.at(0)
 			bgColor.value = "#" + colors.at(-1)
 		}
+		function onThemeChange(theme: "dark" | "light") {
+			if (primary.value === "#ffffff" && theme === "light")
+				primary.value = "#000000"
+			if (primary.value === "#000000" && theme === "dark")
+				primary.value = "#ffffff"
+		}
 
 		onMounted(() => {
 			const url = new URL(location.href)
@@ -127,7 +139,8 @@ export default defineComponent({
 			copiedTooltip,
 			download,
 			onClickImport,
-			onClickExport
+			onClickExport,
+			onThemeChange
 		}
 	}
 })

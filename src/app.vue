@@ -3,7 +3,7 @@
 	<div id="title" class="title-bar">
 		<h3 class="title">Team Raptus Logo Lab</h3>
 		<span class="tools">
-			<ThemeSwitch />
+			<ThemeSwitch @theme-change="onThemeChange" />
 			<GitHubRepo :href="repoUrl" class="contrast" />
 		</span>
 	</div>
