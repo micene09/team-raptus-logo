@@ -1,5 +1,5 @@
 <template>
-	<span class="theme-switch" @click="() => toggleDark()" :class="{
+	<span class="theme-switch" @click="onClickSwitch" :class="{
 			'dark': isDark,
 			'light': !isDark
 		}">
@@ -114,6 +114,7 @@
 
 <script setup lang="ts">
 	import { useDark, useToggle } from '@vueuse/core'
+	import { onMounted } from 'vue'
 
 	const isDark = useDark({
 		selector: "html",
@@ -122,4 +123,17 @@
 		valueLight: 'light'
 	})
 	const toggleDark = useToggle(isDark)
+	const emit = defineEmits<{
+		(e: "theme-change", value: "dark" | "light"): void
+	}>()
+	function emitChange() {
+		emit("theme-change", isDark.value ? "dark" : "light")
+	}
+	function onClickSwitch() {
+		toggleDark()
+		emitChange()
+	}
+	onMounted(() => {
+		emitChange()
+	})
 </script>
