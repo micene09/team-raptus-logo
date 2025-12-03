@@ -7,7 +7,7 @@ import FormatPicker from "./components/format-picker.vue";
 import ResolutionPicker from "./components/resolution-picker.vue";
 import ThemeSwitch from "./components/theme-switch.vue";
 import GitHubRepo from "./components/github-repo.vue";
-import { refAutoReset, refDebounced, useClipboard, useDark } from "@vueuse/core";
+import { refAutoReset, refDebounced, useClipboard, useDark, useShare } from "@vueuse/core";
 
 export type Preset = {
 	bgColor: string
@@ -23,7 +23,6 @@ export default defineComponent({
 		GitHubRepo
 	},
 	setup() {
-		const { copy } = useClipboard()
 		const loading = ref(true)
 		const loadingDebounced = refDebounced(loading, 300)
 		const copiedTooltip = refAutoReset<string | undefined>(undefined, 2500)
@@ -59,9 +58,20 @@ export default defineComponent({
 		function share() {
 			const preset = getPresetObject()
 			const searchParams = new URLSearchParams(preset)
+
+			const { share, isSupported } = useShare()
 			const url = new URL(location.href.split("?")[0] + "?" + searchParams.toString())
-			copy(url.toString())
-			copiedTooltip.value = "Link copied"
+			if (isSupported.value) {
+				share({
+					title: `Team Raptus Logo - Primary ${primary.value}; Background ${bgColor.value}`,
+					url: url.href
+				})
+			}
+			else {
+				const { copy } = useClipboard()
+				copy(url.toString())
+				copiedTooltip.value = "Link copied"
+			}
 		}
 		async function onClickImport() {
 			const [handle] = await window.showOpenFilePicker({
